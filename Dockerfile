@@ -2,6 +2,7 @@ FROM klee/klee:2.3
 #FROM klee/klee:2.2
 USER root
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 42D5A192B819C5DA
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1A127079A92F09ED
 RUN apt-get update
 RUN apt-get install software-properties-common -y
 RUN add-apt-repository -y ppa:openjdk-r/ppa
