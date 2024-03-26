@@ -55,4 +55,4 @@ Now this work based on the folliwng publication: [publication][symex-vp paper]:
 [riscv-vp github]: https://github.com/agra-uni-bremen/riscv-vp
 [microrv32 github]: https://github.com/agra-uni-bremen/microrv32
 [symex-vp paper]: https://doi.org/10.23919/DATE56975.2023.10137202
-[NutShell]: https://github.com/SeddonShen/nutshell-fv/tree/symbolic 
+[NutShell]: https://github.com/SeddonShen/nutshell-fv/tree/symbolic
