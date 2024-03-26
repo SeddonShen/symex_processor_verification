@@ -1,3 +1,7 @@
 [submodule "microrv32"]
 	path = microrv32
 	url = https://github.com/SeddonShen/microrv32.git
+[submodule "nutshell-fv"]
+	path = nutshell-fv
+	url = https://github.com/SeddonShen/nutshell-fv.git
+	branch = symbolic

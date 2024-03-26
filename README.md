@@ -1,4 +1,4 @@
-# Symbolic Processor Verification
+# Symbolic Processor Verification For NutShell
 
 This verification approach implementation is based on: 
 
@@ -10,7 +10,7 @@ This verification approach implementation is based on:
 
 ## Clone Repo
 ```console
-foo@bar:~$ git clone git@gitlab.informatik.uni-bremen.de:processor_verification/symex_processor_verification.git --recursive
+foo@bar:~$ git clone https://github.com/SeddonShen/symex_processor_verification.git --recursive
 ```
 
 ### Build Docker Container
@@ -35,7 +35,7 @@ klee@klee:~$ cd src && make
 
 ## How to Cite
 
-Further details are described in the folliwng publication: [publication][symex-vp paper]:
+Now this work based on the folliwng publication: [publication][symex-vp paper]:
 
 ```
 @INPROCEEDINGS{nbruns2023symex,
@@ -51,13 +51,8 @@ Further details are described in the folliwng publication: [publication][symex-v
 ```
 
 ## Acknowledgements
-This work was supported in part by the German Federal
-Ministry of Education and Research (BMBF) within the project Scale4Edge
-under contract no. 16ME0127, within the project VerSys under contract no.
-01IW1900, and within the project ECXL no. 01IW22002.
-
 [klee github]: https://github.com/klee/klee	
 [riscv-vp github]: https://github.com/agra-uni-bremen/riscv-vp
 [microrv32 github]: https://github.com/agra-uni-bremen/microrv32
 [symex-vp paper]: https://doi.org/10.23919/DATE56975.2023.10137202
-
+[NutShell]: https://github.com/SeddonShen/nutshell-fv/tree/symbolic 
