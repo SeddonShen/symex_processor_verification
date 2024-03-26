@@ -28,27 +28,36 @@ struct CPUValues {
   uint32_t rvfi_ixl;
   uint32_t rvfi_rs1_addr;
   uint32_t rvfi_rs2_addr;
+  // valid use
   uint32_t rvfi_rd_addr;
+  // end valid use
   uint32_t rvfi_mem_rmask;
   uint32_t rvfi_mem_wmask;
 
+  // valid use
   bool rvfi_valid;
+  // end valid use
   bool rvfi_halt;
 
+  // valid use
   uint32_t rvfi_insn;
+  // end valid use
   uint32_t rvfi_rs1_rdata;
   uint32_t rvfi_rs2_rdata;
 
+  // valid use
   uint32_t rvfi_rd_wdata;
   uint32_t rvfi_pc_rdata;
   uint32_t rvfi_pc_wdata;
   uint32_t rvfi_mem_addr;
+  // end valid use
   uint32_t rvfi_mem_rdata;
   uint32_t rvfi_mem_wdata;
   uint64_t rvfi_order;
 };
 
 void getValues(CPUValues &values, Vconfig *top) {
+  // valid values
   values.IMem_fetchEnable = top->io_memIF_IMem_fetchEnable;
   values.IMem_address = top->io_memIF_IMem_address;
 
@@ -57,7 +66,7 @@ void getValues(CPUValues &values, Vconfig *top) {
   values.DMem_wrStrobe = top->io_memIF_DMem_wrStrobe;
   values.DMem_address = top->io_memIF_DMem_address;
   values.io_memIF_DMem_writeData = top->io_memIF_DMem_writeData;
-
+  // end valid values
   values.io_halted = top->io_halted;
   values.io_fetchSync = top->io_fetchSync;
   values.io_dbgState = top->io_dbgState;
@@ -100,6 +109,7 @@ int main(int argc, char **argv, char **env) {
 
   // unsigned int mem_size = 1024 * 1024 * 32;
   // unsigned int mem_size = 1024 * 32;
+  // TODO: Paper has mentioned that 64Bytes is enough for the test?
   unsigned int mem_size = 64;
 
   rv32::InstructionMemoryXX instrMem;

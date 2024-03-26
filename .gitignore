@@ -1,2 +1,15 @@
 src/build/*
 src/obj_dir/*
+src/klee-*/
+.metals/
+src/klee-last
+src/byte_code_main
+*.txt
+*.early
+*.kquery
+*.ktest
+*.err
+*.ll
+src/klee_inst_results
+build/
+.vscode/

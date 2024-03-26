@@ -5,15 +5,19 @@
 #include <map>
 #include <cstdlib>
 #include <ctime>
-
+#include <stdio.h>
 #include "instr_encoding.h"
 #ifdef ENABLE_KLEE
 #include "klee_conf.h"
 #endif
 
 #define STR(x) #x
-#define MY_ASSERT(x) if (!(x)) { fprintf(stderr,"My custom assertion failed: (%s), function %s, file %s, line %d.\n", STR(x), __PRETTY_FUNCTION__, __FILE__, __LINE__); abort(); }
-
+#define MY_ASSERT(x)                                                                                                                            \
+	if (!(x))                                                                                                                                   \
+	{                                                                                                                                           \
+		fprintf(stderr, "My custom assertion failed: (%s), function %s, file %s, line %d.\n", STR(x), __PRETTY_FUNCTION__, __FILE__, __LINE__); \
+		abort();                                                                                                                                \
+	}
 
 namespace rv32 {
 
@@ -33,13 +37,16 @@ struct InstructionMemoryXX  : public instr_memory_if
 	virtual uint32_t load_instr(uint64_t pc)
 	{
 		if(instruction_map.count(pc) == 0)
-		{
+		{	
+			// 防止同一位置的指令不一样？ 为什么要这样做？
 			//uint32_t instruction = rand();
 			uint32_t instruction = 0;
 #ifdef ENABLE_KLEE
 			klee_make_symbolic(&instruction, sizeof(instruction), "instruction");
+			// assert(instruction == 273678451);
+			// printf("[TestSSD]:inst:%d",273678451);
 			
-			//klee_assume((instruction & (LW_MASK)) != (LW_ENCODING)); 
+			// klee_assume((instruction & (LW_MASK)) != (LW_ENCODING)); 
 #endif
 			instruction_map[pc] = instruction;
 		}
