@@ -58,44 +58,50 @@ struct CPUValues {
 
 void getValues(CPUValues &values, Vconfig *top) {
   // valid values
-  values.IMem_fetchEnable = top->io_memIF_IMem_fetchEnable;
-  values.IMem_address = top->io_memIF_IMem_address;
+  // values.IMem_fetchEnable = top->io_memIF_IMem_fetchEnable;
+  // values.IMem_address = top->io_memIF_IMem_address;
 
-  values.DMem_readWrite = top->io_memIF_DMem_readWrite;
-  values.DMem_enable = top->io_memIF_DMem_enable;
-  values.DMem_wrStrobe = top->io_memIF_DMem_wrStrobe;
-  values.DMem_address = top->io_memIF_DMem_address;
-  values.io_memIF_DMem_writeData = top->io_memIF_DMem_writeData;
+  // values.DMem_readWrite = top->io_symmemDMemIF_readWrite;
+  // values.DMem_enable = top->io_memIF_DMem_enable;
+  // values.DMem_wrStrobe = top->io_symmemDMemIF_wrStrobe;
+  // values.DMem_address = top->io_symmemDMemIF_address;
+  // values.io_memIF_DMem_writeData = top->io_memIF_DMem_writeData;
   // end valid values
-  values.io_halted = top->io_halted;
-  values.io_fetchSync = top->io_fetchSync;
-  values.io_dbgState = top->io_dbgState;
+  // values.io_halted = top->io_halted;
+  // values.io_fetchSync = top->io_fetchSync;
+  // values.io_dbgState = top->io_dbgState;
 
-  values.rvfi_trap = top->rvfi_trap;
-  values.rvfi_intr = top->rvfi_intr;
+  // values.rvfi_trap = top->rvfi_trap;
+  // values.rvfi_intr = top->rvfi_intr;
 
-  values.rvfi_mode = top->rvfi_mode;
-  values.rvfi_ixl = top->rvfi_ixl;
-  values.rvfi_rs1_addr = top->rvfi_rs1_addr;
-  values.rvfi_rs2_addr = top->rvfi_rs2_addr;
-  values.rvfi_rd_addr = top->rvfi_rd_addr;
-  values.rvfi_mem_rmask = top->rvfi_mem_rmask;
-  values.rvfi_mem_wmask = top->rvfi_mem_wmask;
+  // values.rvfi_mode = top->rvfi_mode;
+  // values.rvfi_ixl = top->rvfi_ixl;
+  // values.rvfi_rs1_addr = top->rvfi_rs1_addr;
+  // values.rvfi_rs2_addr = top->rvfi_rs2_addr;
+  // values.rvfi_rd_addr = top->rvfi_rd_addr;
+  values.rvfi_rd_addr = top->io_difftest_rvfi_rd_addr;
+  // values.rvfi_mem_rmask = top->rvfi_mem_rmask;
+  // values.rvfi_mem_wmask = top->rvfi_mem_wmask;
 
-  values.rvfi_valid = top->rvfi_valid;
-  values.rvfi_halt = top->rvfi_halt;
+  // values.rvfi_valid = top->rvfi_valid;
+  values.rvfi_valid = top->io_difftest_commit;
+  // values.rvfi_halt = top->rvfi_halt;
 
-  values.rvfi_insn = top->rvfi_insn;
-  values.rvfi_rs1_rdata = top->rvfi_rs1_rdata;
-  values.rvfi_rs2_rdata = top->rvfi_rs2_rdata;
+  // values.rvfi_insn = top->rvfi_insn;
+  values.rvfi_insn = top->io_difftest_thisINST;
+  // values.rvfi_rs1_rdata = top->rvfi_rs1_rdata;
+  // values.rvfi_rs2_rdata = top->rvfi_rs2_rdata;
 
-  values.rvfi_rd_wdata = top->rvfi_rd_wdata;
-  values.rvfi_pc_rdata = top->rvfi_pc_rdata;
-  values.rvfi_pc_wdata = top->rvfi_pc_wdata;
-  values.rvfi_mem_addr = top->rvfi_mem_addr;
-  values.rvfi_mem_rdata = top->rvfi_mem_rdata;
-  values.rvfi_mem_wdata = top->rvfi_mem_wdata;
-  values.rvfi_order = top->rvfi_order;
+  // values.rvfi_rd_wdata = top->rvfi_rd_wdata;
+  // values.rvfi_pc_rdata = top->rvfi_pc_rdata;
+  // values.rvfi_pc_wdata = top->rvfi_pc_wdata;
+  values.rvfi_rd_wdata = top->io_difftest_rvfi_rd_wdata;
+  values.rvfi_pc_rdata = top->io_difftest_thisPC;
+  values.rvfi_pc_wdata = top->io_difftest_rvfi_pc_wdata;
+  // values.rvfi_mem_addr = top->rvfi_mem_addr;
+  // values.rvfi_mem_rdata = top->rvfi_mem_rdata;
+  // values.rvfi_mem_wdata = top->rvfi_mem_wdata;
+  // values.rvfi_order = top->rvfi_order;
 }
 
 int main(int argc, char **argv, char **env) {
@@ -154,7 +160,7 @@ int main(int argc, char **argv, char **env) {
   while (!Verilated::gotFinish()) {
     main_time++;
 
-    top->clk = !top->clk;
+    top->clock = !top->clock;
 
     getValues(values, top);
 
@@ -217,49 +223,49 @@ int main(int argc, char **argv, char **env) {
       already_executed_pcs.insert(iss.last_pc);
     }
 
-    if (top->io_memIF_IMem_instructionReady) {
+    if (top->io_symmemIMemIF_instructionReady) {
       ready_count++;
     }
 
     if (ready_count > 1) {
-      top->io_memIF_IMem_instructionReady = false;
+      top->io_symmemIMemIF_instructionReady = false;
       ready_count = 0;
     }
-    top->io_memIF_DMem_dataReady = false;
+    top->io_symmemDMemIF_dataReady = false;
 
-    if (!top->io_memIF_DMem_enable && top->io_memIF_DMem_wrStrobe == 15 &&
-        !top->io_memIF_DMem_readWrite) {
+    if (!top->io_symmemDMemIF_enable && top->io_symmemDMemIF_wrStrobe == 15 &&
+        !top->io_symmemDMemIF_readWrite) {
       init = true;
       default_dbus++;
     }
 
-    if (top->io_memIF_DMem_enable && top->io_memIF_DMem_wrStrobe &&
-        top->io_memIF_DMem_readWrite) {
+    if (top->io_symmemDMemIF_enable && top->io_symmemDMemIF_wrStrobe &&
+        top->io_symmemDMemIF_readWrite) {
 
-      rtl_mem.store_strobe(top->io_memIF_DMem_wrStrobe,
-                           top->io_memIF_DMem_address,
-                           top->io_memIF_DMem_writeData);
-      top->io_memIF_DMem_dataReady = true;
+      rtl_mem.store_strobe(top->io_symmemDMemIF_wrStrobe,
+                           top->io_symmemDMemIF_address,
+                           top->io_symmemDMemIF_writeData);
+      top->io_symmemDMemIF_dataReady = true;
 
       store_time++;
     }
 
-    if (top->io_memIF_DMem_enable && top->io_memIF_DMem_wrStrobe &&
-        !top->io_memIF_DMem_readWrite) {
-      top->io_memIF_DMem_readData = rtl_mem.load_strobe(
-          top->io_memIF_DMem_wrStrobe, top->io_memIF_DMem_address);
-      top->io_memIF_DMem_dataReady = true;
+    if (top->io_symmemDMemIF_enable && top->io_symmemDMemIF_wrStrobe &&
+        !top->io_symmemDMemIF_readWrite) {
+      top->io_symmemDMemIF_readData = rtl_mem.load_strobe(
+          top->io_symmemDMemIF_wrStrobe, top->io_symmemDMemIF_address);
+      top->io_symmemDMemIF_dataReady = true;
 
       load_time++;
     }
 
-    if (top->io_memIF_IMem_fetchEnable) {
+    if (top->io_symmemIMemIF_fetchEnable) {
       first_fetch = true;
       fetch_time++;
 
-      uint32_t instruction = instrMem.load_instr(top->io_memIF_IMem_address);
-      top->io_memIF_IMem_instruction = instruction; // write instruction
-      top->io_memIF_IMem_instructionReady = true;
+      uint32_t instruction = instrMem.load_instr(top->io_symmemIMemIF_address);
+      top->io_symmemIMemIF_instruction = instruction; // write instruction
+      top->io_symmemIMemIF_instructionReady = true;
     }
 
 
