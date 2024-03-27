@@ -4,7 +4,6 @@ src/klee-*/
 .metals/
 src/klee-last
 src/byte_code_main
-*.txt
 *.early
 *.kquery
 *.ktest

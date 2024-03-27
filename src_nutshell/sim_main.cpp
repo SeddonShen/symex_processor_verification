@@ -205,6 +205,7 @@ int main(int argc, char **argv, char **env) {
 #endif
       assert(iss.instr.data() == values.rvfi_insn);
       assert(iss.last_pc == values.rvfi_pc_rdata);
+      std::cout << "iss.pc:" << iss.pc << std::endl;
 #ifdef TRACE
       std::cout << "iss.pc:" << iss.pc << std::endl;
 #endif
