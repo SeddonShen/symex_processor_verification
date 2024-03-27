@@ -13,3 +13,7 @@ src/byte_code_main
 src/klee_inst_results
 build/
 .vscode/
+src_nutshell/build/*
+src_nutshell/obj_dir/*
+src_nutshell/klee-*/
+src_nutshell/CMake
