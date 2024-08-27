@@ -13,3 +13,4 @@ src/byte_code_main
 src/klee_inst_results
 build/
 .vscode/
+*.log

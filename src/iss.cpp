@@ -274,6 +274,7 @@ void ISS::exec_step() {
   } break;
 
   case Opcode::SW: {
+    printf("ISS SW!!!!!\n");
     uint32_t addr = regs[instr.rs1()] + instr.S_imm();
     trap_check_addr_alignment<4, false>(addr);
     mem->store_word(addr, regs[instr.rs2()]);

@@ -128,7 +128,7 @@ struct csr_mstatus {
 
 struct csr_mtvec {
 	union {
-		uint32_t reg = 0;
+		uint32_t reg = 0x1c0;
 		struct {
 			unsigned mode : 2;   // WARL
 			unsigned base : 30;  // WARL

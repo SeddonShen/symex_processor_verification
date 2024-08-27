@@ -120,7 +120,7 @@ struct ISS : public external_interrupt_target, public clint_interrupt_target {
 	instr_memory_if *instr_mem = nullptr;
 	data_memory_if *mem = nullptr;
 	RegFile regs;
-	uint32_t pc = 0;
+	uint32_t pc = 0x200;
 	uint32_t last_pc = 0;
 	bool trace = false;
 	bool shall_exit = false;
